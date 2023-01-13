@@ -40,7 +40,11 @@ class KinMaking(Model):
         init_sea_level=0,
         init_global_temperature=21.0,
         init_num_critters=1,
-        data_path=None
+        data_path=None,
+        height_map_url="./data/jakarta_heightmap_2.png",
+        seg_map_url="./data/jakarta_fake_2.png",
+        min_h=-50,
+        max_h=600
     ) -> None:
         super().__init__()
         self.crs = "epsg:3857"
@@ -58,6 +62,9 @@ class KinMaking(Model):
         self.temp_rise_rate = temp_rise_rate
         self.temp_rise_exp = temp_rise_exp
         self.init_num_critters = init_num_critters
+        self.height_map_url = height_map_url
+        self.seg_map_url = seg_map_url
+        (self.min_h, self.max_h)=(min_h, max_h)
         
         self.schedule = RandomActivation(self)
         self._init_world(data_path)

@@ -79,6 +79,8 @@ model_params = {
     "sealing_rate": Slider("Sealing Rate", 1.05, 0.5, 1.5, 0.01),
     "sealevel_rise_rate": Slider("Sealevel Rising Rate", 10, 0, 50, 1),
     "init_sea_level": Slider("Initial Sealevel", 0, -50, 150, 1),
+    "min_h": Slider("Minimum Terrain height", -50, -200, 1000, 1),
+    "max_h": Slider("Maximum Terrain height", 600, -200, 1000, 1),
     "human_expansion_rate": Slider("Human Expansion Rate", 1.05, 0.5, 1.5, 0.01),
     "temp_rise_rate": Slider("Global Temp Rise Rate", 0.1, 0.0, 1.0, 0.05),
     "temp_rise_exp": Slider("Global Temp Rise Exponent", 1.02, 1, 1.2, 0.01),

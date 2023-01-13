@@ -198,8 +198,8 @@ class World(GeoSpace):
     def generate_map(self, model):
         cell: BiomCell
 
-        self._load_heightmap()
-        self._load_seg_map()
+        self._load_heightmap(url=model.height_map_url, min_h=model.min_h, max_h=model.max_h)
+        self._load_seg_map(url=model.seg_map_url)
         for cell in self.raster_layer:
             cell.type = self._get_cell_biom_type(cell.pos)
             cell.model = model
@@ -209,7 +209,7 @@ class World(GeoSpace):
     def _load_heightmap(
         self,
         min_h=-50,
-        max_h=550,
+        max_h=600,
         url="./data/jakarta_heightmap_2.png"
     ):
         img_rgba = Image.open(url)
