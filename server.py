@@ -84,7 +84,7 @@ model_params = {
     "human_expansion_rate": Slider("Human Expansion Rate", 1.05, 0.5, 1.5, 0.01),
     "temp_rise_rate": Slider("Global Temp Rise Rate", 0.1, 0.0, 1.0, 0.05),
     "temp_rise_exp": Slider("Global Temp Rise Exponent", 1.02, 1, 1.2, 0.01),
-    "init_num_critters": Slider("Number of critters", 1, 1, 1000, 1)
+    "init_num_critters": Slider("Number of critters", 100, 1, 1000, 1)
 }
 map_module = MapModule(
     portrayal_method=draw,

@@ -22,7 +22,7 @@ class KinMaking(Model):
     temp_rise_rate: float
     temp_rise_exp: float
     crs: str
-    num_critters: int
+    init_num_critters: int
     population_reporters: dict
     population_charts: dict
 
@@ -39,7 +39,7 @@ class KinMaking(Model):
         init_mod_pollution=0,
         init_sea_level=0,
         init_global_temperature=21.0,
-        init_num_critters=1,
+        init_num_critters=100,
         data_path=None,
         height_map_url="./data/jakarta_heightmap_2.png",
         seg_map_url="./data/jakarta_fake_2.png",
