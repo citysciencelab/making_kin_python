@@ -5,6 +5,24 @@ import uuid
 from mesa_geo import GeoAgent
 from space import BiomType, BiomCell
 from shapely.geometry import Point
+import happinessFunctions
+
+class Diet(Enum):
+    CARNIVORE = 0
+    HERBIVORE = 1
+    OMNIVORE = 2
+
+class Species(Enum):
+    ROACH = "roach"
+    BUTTERFLY = "butterfly"
+    SONGBIRD = "songbird"
+    RAPTOR = "raptor"
+    RODENT = "rodent"
+    MONKEY = "monkey"
+    CANINE = "canine"
+    CRAB = "crab"
+    FISH = "bass"
+    SEAL = "seal"
 
 def get_norm_vector(vector: tuple[float, float], l = 1):
     dist = math.sqrt(vector[0]**2 + vector[1]**2)
@@ -33,22 +51,8 @@ def defaultHappinessFunc(self):
 
     return True
 
-class Diet(Enum):
-    CARNIVORE = 0
-    HERBIVORE = 1
-    OMNIVORE = 2
-
-class Species(Enum):
-    ROACH = "roach"
-    BUTTERFLY = "butterfly"
-    SONGBIRD = "songbird"
-    RAPTOR = "raptor"
-    RODENT = "rodent"
-    MONKEY = "monkey"
-    CANINE = "canine"
-    CRAB = "crab"
-    FISH = "bass"
-    SEAL = "seal"
+def get_happiness_function(species: Species):
+    return critter_init_values[species]["happinessFunction"] if critter_init_values[species]["happinessFunction"] != None else defaultHappinessFunc
 
 critter_init_values = {
     Species.BUTTERFLY: {
@@ -60,7 +64,8 @@ critter_init_values = {
         "res_sealing": 0.5,
         "max_temp": 28.0,
         "reproduction_rate": 5,
-        "color": "yellow"
+        "color": "yellow",
+        "happinessFunction": happinessFunctions.butterfly
     },
     Species.SONGBIRD: {
         "bioms": [BiomType.FOREST, BiomType.PARK, BiomType.RIVER, BiomType.URBAN, BiomType.MEADOW],
@@ -71,7 +76,8 @@ critter_init_values = {
         "res_sealing": 0.5,
         "max_temp": 28.0,
         "reproduction_rate": 4,
-        "color": "orange"
+        "color": "orange",
+        "happinessFunction": None
     },
     Species.RAPTOR: {
         "bioms": [BiomType.FOREST, BiomType.PARK, BiomType.RIVER, BiomType.ROAD, BiomType.ROCK, BiomType.COASTAL, BiomType.HARBOUR, BiomType.BEACH, BiomType.MEADOW],
@@ -82,7 +88,8 @@ critter_init_values = {
         "res_sealing": 0.5,
         "max_temp": 28.0,
         "reproduction_rate": 5,
-        "color": "brown"
+        "color": "brown",
+        "happinessFunction": None
     },
     Species.RODENT: {
         "bioms": [BiomType.PARK, BiomType.RIVER, BiomType.URBAN, BiomType.INDUSTRIAL, BiomType.HARBOUR, BiomType.MEADOW],
@@ -93,7 +100,8 @@ critter_init_values = {
         "res_sealing": 0.9,
         "max_temp": 28.0,
         "reproduction_rate": 3,
-        "color": "blue"
+        "color": "blue",
+        "happinessFunction": None
     },
     Species.MONKEY: {
         "bioms": [BiomType.PARK, BiomType.FOREST],
@@ -104,7 +112,8 @@ critter_init_values = {
         "res_sealing": 0.3,
         "max_temp": 28.0,
         "reproduction_rate": 6,
-        "color": "green"
+        "color": "green",
+        "happinessFunction": None
     },
     Species.CANINE: {
         "bioms": [BiomType.PARK, BiomType.FOREST, BiomType.INDUSTRIAL, BiomType.URBAN, BiomType.HARBOUR, BiomType.MEADOW],
@@ -115,7 +124,8 @@ critter_init_values = {
         "res_sealing": 0.5,
         "max_temp": 28.0,
         "reproduction_rate": 5,
-        "color": "pink"
+        "color": "pink",
+        "happinessFunction": None
     },
     Species.CRAB: {
         "bioms": [BiomType.COASTAL, BiomType.RIVER, BiomType.HARBOUR, BiomType.BEACH, BiomType.ROCK],
@@ -126,7 +136,8 @@ critter_init_values = {
         "res_sealing": 0.5,
         "max_temp": 28.0,
         "reproduction_rate": 3,
-        "color": "purple"
+        "color": "purple",
+        "happinessFunction": None
     },
     Species.FISH: {
         "bioms": [BiomType.COASTAL, BiomType.OCEAN, BiomType.RIVER],
@@ -137,7 +148,8 @@ critter_init_values = {
         "res_sealing": 0,
         "max_temp": 23.0,
         "reproduction_rate": 4,
-        "color": "gold"
+        "color": "gold",
+        "happinessFunction": None
     },
     Species.SEAL: {
         "bioms": [BiomType.COASTAL, BiomType.OCEAN, BiomType.HARBOUR, BiomType.BEACH, BiomType.ROCK],
@@ -148,7 +160,8 @@ critter_init_values = {
         "res_sealing": 0.5,
         "max_temp": 28.0,
         "reproduction_rate": 6,
-        "color": "red"
+        "color": "red",
+        "happinessFunction": None
     },
     Species.ROACH: {
         "bioms": [BiomType.HARBOUR, BiomType.INDUSTRIAL, BiomType.ROAD, BiomType.URBAN, BiomType.PARK, BiomType.MEADOW],
@@ -159,7 +172,8 @@ critter_init_values = {
         "res_sealing": 1,
         "max_temp": 32.0,
         "reproduction_rate": 2,
-        "color": "black"
+        "color": "black",
+        "happinessFunction": None
     }
 }
 
@@ -217,7 +231,7 @@ class Critter(GeoAgent):
             crs=self.crs,
             geometry=self.geometry,
             species=self.species,
-            happinessFunction=defaultHappinessFunc,
+            happinessFunction=get_happiness_function(self.species),
             is_offspring=True
         )
         self.model.space.add_agents(critter)

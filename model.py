@@ -4,7 +4,7 @@ from mesa import Model
 from mesa.time import RandomActivation
 from space import World
 from shapely.geometry import Point
-from agent import Critter, Species, critter_init_values, defaultHappinessFunc
+from agent import Critter, Species, critter_init_values, get_happiness_function
 import math
 
 class KinMaking(Model):
@@ -150,7 +150,7 @@ class KinMaking(Model):
                 crs=self.crs,
                 geometry=geometry,
                 species=species,
-                happinessFunction=defaultHappinessFunc
+                happinessFunction=get_happiness_function(species)
             )
             setattr(self, critter.species.value, getattr(self, critter.species.value) + 1)
             setattr(self, "init_{}".format(critter.species.value), getattr(self, critter.species.value) + 1)
