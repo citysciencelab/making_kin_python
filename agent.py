@@ -20,7 +20,7 @@ class Species(Enum):
     RODENT = "rodent"
     MONKEY = "monkey"
     CANINE = "canine"
-    CRAB = "crab"
+    CRUSTACEAN = "crustacean"
     FISH = "bass"
     SEAL = "seal"
 
@@ -127,7 +127,7 @@ critter_init_values = {
         "color": "pink",
         "happinessFunction": None
     },
-    Species.CRAB: {
+    Species.CRUSTACEAN: {
         "bioms": [BiomType.COASTAL, BiomType.RIVER, BiomType.HARBOUR, BiomType.BEACH, BiomType.ROCK],
         "predators": [Species.RAPTOR, Species.FISH],
         "diet": Diet.HERBIVORE,
